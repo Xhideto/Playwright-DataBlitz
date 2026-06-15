@@ -1,4 +1,5 @@
 from playwright.sync_api import Page, expect
+import re
 
 class TestDatablitzHomepage:
 
@@ -69,10 +70,11 @@ class TestDatablitzHomepage:
 
         expect (page.get_by_role("heading", name="Hot Picks")).to_be_visible()
 
-    def test_hot_picks_lists(self, page: Page):
+    def test_hot_picks_list(self, page: Page):
          page.goto("https://ecommerce.datablitz.com.ph/")
 
-         #game covers
+         page.locator("#shopify-section-1584623859185 .collection-item").nth(0).click()
+         expect (page).to_have_url(re.compile(r"/collections/"))
 
     def test_hot_picks_nextb(self, page: Page):
             page.goto("https://ecommerce.datablitz.com.ph/")
