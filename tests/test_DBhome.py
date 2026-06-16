@@ -89,9 +89,18 @@ class TestDatablitzHomepage:
     def test_hot_picks_nextb(self, page: Page):
             page.goto("https://ecommerce.datablitz.com.ph/")
 
-            # page.locator("#shopify-section-1584623859185").get_by_role("button", name="Next").click()
+            next_button = page.locator("#shopify-section-1584623859185").get_by_role("button", name="Next")
+            expect(next_button).to_be_visible()
+            next_button.click()
+
+    def test_hot_picks_previousb(self, page: Page):
+            page.goto("https://ecommerce.datablitz.com.ph/")
 
             next_button = page.locator("#shopify-section-1584623859185").get_by_role("button", name="Next")
             expect(next_button).to_be_visible()
             next_button.click()
+
+            previous_button = page.locator("#shopify-section-1584623859185").get_by_role("button", name="Previous")
+            expect(previous_button).to_be_visible()
+            previous_button.click()
         
