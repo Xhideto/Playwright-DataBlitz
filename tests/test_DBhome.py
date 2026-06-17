@@ -113,3 +113,22 @@ class TestDatablitzHomepage:
          page.locator('#shopify-section-1590542985479').get_by_text("View all ").click()
          expect (page).to_have_url("https://ecommerce.datablitz.com.ph/collections/new-arrivals")
          page.go_back()
+
+    def test_new_arrivals_content(self, page: Page):
+         page.goto("https://ecommerce.datablitz.com.ph/")
+
+         newa_img = page.locator("#shopify-section-1590542985479 .product-item").nth(0)
+         expect(newa_img.locator('.product-item__primary-image')).to_be_visible()
+         newa_img.hover()
+         page.wait_for_timeout(500)
+         expect(newa_img.locator('.product-item__secondary-image')).to_have_count(1)
+         newa_img.click()
+         expect (page).to_have_url(re.compile(r"/collections/new-arrivals/products/"))
+         page.go_back()
+
+         expect(newa_img.locator('.price')).to_be_visible
+
+         expect(newa_img.locator('.product-item__title')).to_be_visible()
+         newa_img.locator('.product-item__title').click()
+         expect (page).to_have_url(re.compile(r"/collections/new-arrivals/products/"))
+         page.go_back()
