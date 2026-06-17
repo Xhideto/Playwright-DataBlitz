@@ -103,4 +103,13 @@ class TestDatablitzHomepage:
             previous_button = page.locator("#shopify-section-1584623859185").get_by_role("button", name="Previous")
             expect(previous_button).to_be_visible()
             previous_button.click()
-        
+
+    def test_new_arrivals(self, page: Page):
+         page.goto("https://ecommerce.datablitz.com.ph/")
+
+         expect (page.get_by_role("heading", name="New Arrivals")).to_be_visible()
+
+         expect (page.locator("#shopify-section-1590542985479").get_by_text("View all ")).to_be_visible()
+         page.locator('#shopify-section-1590542985479').get_by_text("View all ").click()
+         expect (page).to_have_url("https://ecommerce.datablitz.com.ph/collections/new-arrivals")
+         page.go_back()
