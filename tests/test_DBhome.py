@@ -132,3 +132,11 @@ class TestDatablitzHomepage:
          newa_img.locator('.product-item__title').click()
          expect (page).to_have_url(re.compile(r"/collections/new-arrivals/products/"))
          page.go_back()
+
+         newa_img.hover()
+         page.wait_for_timeout(500)
+
+         expect(newa_img.locator('#product_form_id_15412342292851_1590542985479').get_by_role('link', name="Choose options")).to_be_visible()
+         newa_img.locator('#product_form_id_15412342292851_1590542985479').get_by_role('link', name="Choose options").click()
+         expect (page).to_have_url(re.compile(r"/collections/new-arrivals/products/"))
+         page.go_back()
