@@ -223,3 +223,27 @@ class TestDatablitzHomepage:
               page.go_back()
               print(f"Featured consoles product {i+1} been tested")
 
+    def test_featured_consoles_nextb(self, page: Page):
+            page.goto("https://ecommerce.datablitz.com.ph/")
+
+            next_button = page.locator("#shopify-section-1616576385b0defc44").get_by_role("button", name="Next")
+            next_button.hover()
+            page.wait_for_timeout(500)
+            expect(next_button).to_be_visible()
+            next_button.click()
+
+    def test_featured_consoles_previousb(self, page: Page):
+            page.goto("https://ecommerce.datablitz.com.ph/")
+
+            next_button = page.locator("#shopify-section-1616576385b0defc44").get_by_role("button", name="Next")
+            next_button.hover()
+            page.wait_for_timeout(500)
+            expect(next_button).to_be_visible()
+            next_button.click()
+
+            previous_button = page.locator("#shopify-section-1616576385b0defc44").get_by_role("button", name="Previous")
+            next_button.hover()
+            page.wait_for_timeout(500)
+            expect(previous_button).to_be_visible()
+            previous_button.click()
+
