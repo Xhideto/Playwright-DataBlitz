@@ -64,14 +64,7 @@ class TestDatablitzHomepage:
          page.locator("#shopify-section-1584623859185 .collection-item").nth(5).click()
          expect (page).to_have_url(re.compile(r"/collections/"))
 
-    def test_hot_picks_nextb(self, page: Page):
-            page.goto("https://ecommerce.datablitz.com.ph/")
-
-            next_button = page.locator("#shopify-section-1584623859185").get_by_role("button", name="Next")
-            expect(next_button).to_be_visible()
-            next_button.click()
-
-    def test_hot_picks_previousb(self, page: Page):
+    def test_hot_picks_buttons(self, page: Page):
             page.goto("https://ecommerce.datablitz.com.ph/")
 
             next_button = page.locator("#shopify-section-1584623859185").get_by_role("button", name="Next")
@@ -92,7 +85,7 @@ class TestDatablitzHomepage:
          expect (page).to_have_url("https://ecommerce.datablitz.com.ph/collections/new-arrivals")
          page.go_back()
 
-    def test_new_arrivals_iterate(self, page: Page):
+    def test_new_arrivals_products(self, page: Page):
          page.goto("https://ecommerce.datablitz.com.ph/")
 
          LIMIT=6
@@ -148,14 +141,7 @@ class TestDatablitzHomepage:
                          print(f"⚠️ Product {i+1}: UNKNOWN button type!")
                          print(newa_button.inner_html()[:500])
 
-    def test_new_arrivals_nextb(self, page: Page):
-            page.goto("https://ecommerce.datablitz.com.ph/")
-
-            next_button = page.locator("#shopify-section-1590542985479").get_by_role("button", name="Next")
-            expect(next_button).to_be_visible()
-            next_button.click()
-
-    def test_new_arrivals_previousb(self, page: Page):
+    def test_new_arrivals_buttons(self, page: Page):
             page.goto("https://ecommerce.datablitz.com.ph/")
 
             next_button = page.locator("#shopify-section-1590542985479").get_by_role("button", name="Next")
@@ -201,16 +187,7 @@ class TestDatablitzHomepage:
               page.go_back()
               print(f"Featured consoles product {i+1} been tested")
 
-    def test_featured_consoles_nextb(self, page: Page):
-            page.goto("https://ecommerce.datablitz.com.ph/")
-
-            next_button = page.locator("#shopify-section-1616576385b0defc44").get_by_role("button", name="Next")
-            next_button.hover()
-            page.wait_for_timeout(500)
-            expect(next_button).to_be_visible()
-            next_button.click()
-
-    def test_featured_consoles_previousb(self, page: Page):
+    def test_featured_consoles_buttons(self, page: Page):
             page.goto("https://ecommerce.datablitz.com.ph/")
 
             next_button = page.locator("#shopify-section-1616576385b0defc44").get_by_role("button", name="Next")
@@ -244,3 +221,24 @@ class TestDatablitzHomepage:
                 expect (page).to_have_url(re.compile(r"/collections/"))
                 page.go_back()
                 print(f"Game promo product {i+1} been tested")
+
+    def test_home_slideshow_dot_visible(self, page: Page):
+          page.goto("https://ecommerce.datablitz.com.ph/")
+
+          dots = page.locator('#shopify-section-slideshow .dot').count()
+          assert dots > 0, "No dots found"
+          print(f"{dots} slideshow dots found")
+          expect (page.locator('.dot').first).to_be_visible()
+
+    def test_home_slideshow_dot_click(self, page: Page):
+          page.goto("https://ecommerce.datablitz.com.ph/")
+
+          dots = page.locator('#shopify-section-slideshow .dot').count()
+        
+          for i in range(dots):
+                dot = page.locator('#shopify-section-slideshow .dot').nth(i)
+                dot.click()
+                page.wait_for_timeout(500)
+
+                expect (dot).to_have_class(re.compile(r"is-selected"))
+                print(f"Slideshow dot {i+1} is selected")
