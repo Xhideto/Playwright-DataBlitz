@@ -247,3 +247,22 @@ class TestDatablitzHomepage:
             expect(previous_button).to_be_visible()
             previous_button.click()
 
+    def test_game_promos(self, page: Page):
+          page.goto("https://ecommerce.datablitz.com.ph/")
+          
+          promo_games = page.locator("#shopify-section-1587182738805 .promo-block").count()
+
+          for i in range(promo_games):
+                product = page.locator("#shopify-section-1587182738805 .promo-block").nth(i)
+                expect (product.locator('.promo-block__heading')).to_be_visible()
+
+                expect (product.locator('.promo-block__image-wrapper')).to_be_visible()
+                product.locator('.promo-block__image-wrapper').click()
+                expect (page).to_have_url(re.compile(r"/collections/"))
+                page.go_back()
+
+                expect (product.locator('.promo-block__cta')).to_be_visible()
+                product.locator('.promo-block__cta').click()
+                expect (page).to_have_url(re.compile(r"/collections/"))
+                page.go_back()
+                print(f"Game promo product {i+1} been tested")
