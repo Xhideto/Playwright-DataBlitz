@@ -7,6 +7,63 @@ class TestDatablitzHomepage:
         page.goto("https://ecommerce.datablitz.com.ph/")
         expect (page).to_have_title("DataBlitz - Your Total Gaming and Multimedia Store")
 
+    def test_home_slideshow_dot_visible(self, page: Page):
+          page.goto("https://ecommerce.datablitz.com.ph/")
+
+          dots = page.locator('#shopify-section-slideshow .dot').count()
+          assert dots > 0, "No dots found"
+          print(f"{dots} slideshow dots found")
+          expect (page.locator('.dot').first).to_be_visible()
+
+    def test_home_slideshow_dot_click(self, page: Page):
+          page.goto("https://ecommerce.datablitz.com.ph/")
+
+          dots = page.locator('#shopify-section-slideshow .dot').count()
+        
+          for i in range(dots):
+                dot = page.locator('#shopify-section-slideshow .dot').nth(i)
+                dot.click()
+                page.wait_for_timeout(500)
+
+                expect (dot).to_have_class(re.compile(r"is-selected"))
+                print(f"Slideshow dot {i+1} is selected")
+
+    def test_home_slideshow_banners(self, page: Page):
+          page.goto("https://ecommerce.datablitz.com.ph/")
+
+          slides = page.locator('#shopify-section-slideshow .slideshow__slide').count()
+
+          for i in range(slides):
+                page.goto("https://ecommerce.datablitz.com.ph/")
+
+                dot = page.locator('#shopify-section-slideshow .dot').nth(i)
+                dot.click()
+                page.wait_for_timeout(500)
+
+                slide = page.locator('#shopify-section-slideshow .slideshow__slide').nth(i)
+                expect (slide).to_be_visible()
+
+                slide.hover()
+                slide.click()
+                page.wait_for_timeout(500)
+
+                url = page.url
+
+                if "/pages/" in url:
+                      print(f"{url} {i+1} checked")
+
+                elif "/collections/" in url:
+                      print(f"{url} {i+1} checked")
+
+                elif "/products/" in url:
+                      page.go_back()
+                      print(f"{url} {i+1} checked")
+
+                else:
+                    print(f"⚠️ {i+1}: UNKNOWN URL!")
+
+                page.go_back()
+
 
     def test_device_promos(self, page: Page):
           page.goto("https://ecommerce.datablitz.com.ph/")
@@ -221,24 +278,3 @@ class TestDatablitzHomepage:
                 expect (page).to_have_url(re.compile(r"/collections/"))
                 page.go_back()
                 print(f"Game promo product {i+1} been tested")
-
-    def test_home_slideshow_dot_visible(self, page: Page):
-          page.goto("https://ecommerce.datablitz.com.ph/")
-
-          dots = page.locator('#shopify-section-slideshow .dot').count()
-          assert dots > 0, "No dots found"
-          print(f"{dots} slideshow dots found")
-          expect (page.locator('.dot').first).to_be_visible()
-
-    def test_home_slideshow_dot_click(self, page: Page):
-          page.goto("https://ecommerce.datablitz.com.ph/")
-
-          dots = page.locator('#shopify-section-slideshow .dot').count()
-        
-          for i in range(dots):
-                dot = page.locator('#shopify-section-slideshow .dot').nth(i)
-                dot.click()
-                page.wait_for_timeout(500)
-
-                expect (dot).to_have_class(re.compile(r"is-selected"))
-                print(f"Slideshow dot {i+1} is selected")
