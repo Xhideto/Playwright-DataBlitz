@@ -292,7 +292,15 @@ class TestDatablitzHomepage:
               expect (page).to_have_url(re.compile(r"/products/"))
               page.go_back()
 
-              expect(featuredc_product.locator('.price')).to_be_visible
+              if featuredc_product.locator(".product-label").count() > 0:
+                    expect (featuredc_product.locator('.product-label')).to_be_visible()
+                    expect (featuredc_product.locator('.price--highlight')).to_be_visible()
+                    expect (featuredc_product.locator('.price--compare')).to_be_visible()
+                    print(f"Product {i+1} has a label")
+
+              else:
+                    expect(featuredc_product.locator('.price')).to_be_visible()
+                    print(f"Product {i+1} has a price")
 
               expect(featuredc_product.locator('.product-item__title')).to_be_visible()
               featuredc_product.locator('.product-item__title').click()
