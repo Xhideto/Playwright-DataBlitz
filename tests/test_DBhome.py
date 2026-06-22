@@ -574,3 +574,26 @@ class TestDatablitzHomepage:
               expect (page).to_have_url(re.compile(r"/collections/"))
               page.go_back()
               print(f"Featured console accesories {i+1} been tested")
+
+    def test_driving_collections(self, page: Page):
+          page.goto("https://ecommerce.datablitz.com.ph/")
+          
+          driving_devices = page.locator("#shopify-section-1616669569682cb82c .promo-block").count()
+
+          for i in range(driving_devices):
+                product = page.locator("#shopify-section-1616669569682cb82c .promo-block").nth(i)
+
+                expect (product.locator('.promo-block__image-wrapper')).to_be_visible()
+                product.hover()
+                page.wait_for_timeout(500)
+                product.locator('.promo-block__image-wrapper').click()
+                expect (page).to_have_url(re.compile(r"/collections/"))
+
+                page.go_back()
+
+                expect (product.locator('.promo-block__cta')).to_be_visible()
+                product.locator('.promo-block__cta').click()
+                expect (page).to_have_url(re.compile(r"/collections/"))
+
+                page.go_back()
+                print(f"Game promo product {i+1} been tested")
