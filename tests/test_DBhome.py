@@ -164,18 +164,31 @@ class TestDatablitzHomepage:
     def test_hot_picks_list(self, page: Page):
          page.goto("https://ecommerce.datablitz.com.ph/")
 
-         page.locator("#shopify-section-1584623859185 .collection-item").nth(0).click()
-         page.go_back()
-         page.locator("#shopify-section-1584623859185 .collection-item").nth(1).click()
-         page.go_back()
-         page.locator("#shopify-section-1584623859185 .collection-item").nth(2).click()
-         page.go_back()
-         page.locator("#shopify-section-1584623859185 .collection-item").nth(3).click()
-         page.go_back()
-         page.locator("#shopify-section-1584623859185 .collection-item").nth(4).click()
-         page.go_back()
-         page.locator("#shopify-section-1584623859185 .collection-item").nth(5).click()
-         expect (page).to_have_url(re.compile(r"/collections/"))
+         hot_picks = page.locator("#shopify-section-1584623859185 .collection-item").count()
+
+         for i in range(hot_picks):
+               list = page.locator("#shopify-section-1584623859185 .collection-item").nth(i)
+               expect (list.locator('.collection-item__image-wrapper ')).to_be_visible()
+               list.hover()
+               page.wait_for_timeout(500)
+               list.click()
+               expect (page).to_have_url(re.compile(r"/collections/"))
+               page.go_back()
+               print(f"Hot picks product {i+1} tested")
+
+
+      #    page.locator("#shopify-section-1584623859185 .collection-item").nth(0).click()
+      #    page.go_back()
+      #    page.locator("#shopify-section-1584623859185 .collection-item").nth(1).click()
+      #    page.go_back()
+      #    page.locator("#shopify-section-1584623859185 .collection-item").nth(2).click()
+      #    page.go_back()
+      #    page.locator("#shopify-section-1584623859185 .collection-item").nth(3).click()
+      #    page.go_back()
+      #    page.locator("#shopify-section-1584623859185 .collection-item").nth(4).click()
+      #    page.go_back()
+      #    page.locator("#shopify-section-1584623859185 .collection-item").nth(5).click()
+      #    expect (page).to_have_url(re.compile(r"/collections/"))
 
     def test_hot_picks_buttons(self, page: Page):
             page.goto("https://ecommerce.datablitz.com.ph/")
@@ -342,3 +355,222 @@ class TestDatablitzHomepage:
                 expect (page).to_have_url(re.compile(r"/collections/"))
                 page.go_back()
                 print(f"Game promo product {i+1} been tested")
+
+    def test_featured_switch(self, page: Page):
+            page.goto("https://ecommerce.datablitz.com.ph/")
+
+            expect (page.get_by_role("heading", name="Featured Nintendo Switch Games")).to_be_visible()
+
+            expect (page.locator("#shopify-section-1616581165983c351d").get_by_text("View all ")).to_be_visible()
+            page.locator('#shopify-section-1616581165983c351d').get_by_text("View all ").click()
+            expect (page).to_have_url("https://ecommerce.datablitz.com.ph/collections/featured-nintendo-switch-games")
+            page.go_back()
+
+    def test_featured_switch_products(self, page: Page):
+            page.goto("https://ecommerce.datablitz.com.ph/")
+
+            product = page.locator("#shopify-section-1616581165983c351d .product-item").count()
+
+            for i in range(product):
+              switch_product = page.locator("#shopify-section-1616581165983c351d .product-item").nth(i)
+              expect(switch_product.locator('.product-item__primary-image')).to_be_visible()
+              switch_product.hover()
+              page.wait_for_timeout(500)
+              expect(switch_product.locator('.product-item__secondary-image')).to_have_count(1)
+              switch_product.click()
+              expect (page).to_have_url(re.compile(r"/products/"))
+              page.go_back()
+
+              if switch_product.locator(".product-label").count() > 0:
+                    expect (switch_product.locator('.product-label')).to_be_visible()
+                    expect (switch_product.locator('.price--highlight')).to_be_visible()
+                    expect (switch_product.locator('.price--compare')).to_be_visible()
+                    print(f"Switch product {i+1} has a label")
+
+              else:
+                    expect(switch_product.locator('.price')).to_be_visible()
+                    print(f"Switch product {i+1} has a price")
+
+              expect(switch_product.locator('.product-item__title')).to_be_visible()
+              switch_product.locator('.product-item__title').click()
+              expect (page).to_have_url(re.compile(r"/products/"))
+              page.go_back()
+              print(f"Featured switch product {i+1} been tested")
+
+    def test_featured_playstation(self, page: Page):
+            page.goto("https://ecommerce.datablitz.com.ph/")
+
+            expect (page.get_by_role("heading", name="Featured PlayStation Games")).to_be_visible()
+
+            expect (page.locator("#shopify-section-1616582529b9e27459").get_by_text("View all ")).to_be_visible()
+            page.locator('#shopify-section-1616582529b9e27459').get_by_text("View all ").click()
+            expect (page).to_have_url("https://ecommerce.datablitz.com.ph/collections/featured-playstation-games")
+            page.go_back()
+
+    def test_featured_playstation_products(self, page: Page):
+            page.goto("https://ecommerce.datablitz.com.ph/")
+
+            product = page.locator("#shopify-section-1616582529b9e27459 .product-item").count()
+
+            for i in range(product):
+              playstation_product = page.locator("#shopify-section-1616582529b9e27459 .product-item").nth(i)
+              expect(playstation_product.locator('.product-item__primary-image')).to_be_visible()
+              playstation_product.hover()
+              page.wait_for_timeout(500)
+              expect(playstation_product.locator('.product-item__secondary-image')).to_have_count(1)
+              playstation_product.click()
+              expect (page).to_have_url(re.compile(r"/products/"))
+              page.go_back()
+
+              if playstation_product.locator(".product-label").count() > 0:
+                    expect (playstation_product.locator('.product-label')).to_be_visible()
+                    expect (playstation_product.locator('.price--highlight')).to_be_visible()
+                    expect (playstation_product.locator('.price--compare')).to_be_visible()
+                    print(f"Playstation product {i+1} has a label")
+
+              else:
+                    expect(playstation_product.locator('.price')).to_be_visible()
+                    print(f"Playstation product {i+1} has a price")
+
+              expect(playstation_product.locator('.product-item__title')).to_be_visible()
+              playstation_product.locator('.product-item__title').click()
+              expect (page).to_have_url(re.compile(r"/products/"))
+              page.go_back()
+              print(f"Featured playstation product {i+1} been tested")
+
+    def test_featured_xbox(self, page: Page):
+            page.goto("https://ecommerce.datablitz.com.ph/")
+
+            expect (page.get_by_role("heading", name="Featured Xbox Games")).to_be_visible()
+
+            expect (page.locator("#shopify-section-1616585015028b7de4").get_by_text("View all ")).to_be_visible()
+            page.locator('#shopify-section-1616585015028b7de4').get_by_text("View all ").click()
+            expect (page).to_have_url("https://ecommerce.datablitz.com.ph/collections/featured-xbox-games")
+            page.go_back()
+
+    def test_featured_xbox_products(self, page: Page):
+            page.goto("https://ecommerce.datablitz.com.ph/")
+
+            product = page.locator("#shopify-section-1616585015028b7de4 .product-item").count()
+
+            for i in range(product):
+              xbox_product = page.locator("#shopify-section-1616585015028b7de4 .product-item").nth(i)
+              expect(xbox_product.locator('.product-item__primary-image')).to_be_visible()
+              xbox_product.hover()
+              page.wait_for_timeout(500)
+              expect(xbox_product.locator('.product-item__secondary-image')).to_have_count(1)
+              xbox_product.click()
+              expect (page).to_have_url(re.compile(r"/products/"))
+              page.go_back()
+
+              if xbox_product.locator(".product-label").count() > 0:
+                    expect (xbox_product.locator('.product-label')).to_be_visible()
+                    expect (xbox_product.locator('.price--highlight')).to_be_visible()
+                    expect (xbox_product.locator('.price--compare')).to_be_visible()
+                    print(f"Xbox product {i+1} has a label")
+
+              else:
+                    expect(xbox_product.locator('.price')).to_be_visible()
+                    print(f"Xbox product {i+1} has a price")
+
+              expect(xbox_product.locator('.product-item__title')).to_be_visible()
+              xbox_product.locator('.product-item__title').click()
+              expect (page).to_have_url(re.compile(r"/products/"))
+              page.go_back()
+              print(f"Featured xbox product {i+1} been tested")
+
+    def test_device_promos(self, page: Page):
+          page.goto("https://ecommerce.datablitz.com.ph/")
+          
+          promo_devices = page.locator("#shopify-section-1595996575693 .promo-block").count()
+
+          for i in range(promo_devices):
+                product = page.locator("#shopify-section-1595996575693 .promo-block").nth(i)
+
+                expect (product.locator('.promo-block__image-wrapper')).to_be_visible()
+                product.locator('.promo-block__image-wrapper').click()
+
+                url = page.url
+
+                if "/pages/" in url:
+                     print(f"Pages URL {i+1} found")
+
+                elif "/collections/" in url:
+                     print(f"Collections URL {i+1} found")
+
+                else:
+                    print(f"⚠️ {i+1}: UNKNOWN URL!")
+
+                page.go_back()
+
+                expect (product.locator('.promo-block__cta')).to_be_visible()
+                product.locator('.promo-block__cta').click()
+                
+                if "/pages/" in url:
+                     print(f"Pages URL {i+1} found(Button)")
+
+                elif "/collections/" in url:
+                     print(f"Collections URL {i+1} found(Button)")
+
+                else:
+                    print(f"⚠️ {i+1}: UNKNOWN URL!")
+
+                page.go_back()
+                print(f"Game promo product {i+1} been tested")
+
+    def test_device_promos_extend(self, page: Page):
+         page.goto("https://ecommerce.datablitz.com.ph/")
+
+         promo_devices = page.locator("#shopify-section-collection_list_rhNkPm .collection-item").count()
+
+         for i in range(promo_devices):
+               product = page.locator("#shopify-section-collection_list_rhNkPm .collection-item").nth(i)
+               expect (product.locator('.collection-item__image-wrapper ')).to_be_visible()
+               product.hover()
+               page.wait_for_timeout(500)
+               product.click()
+
+               expect (page).to_have_url(re.compile(r"/collections/"))
+               page.go_back()
+               print(f"Extended device promo product {i+1} tested")
+
+    def test_featured_console_accesories(self, page: Page):
+            page.goto("https://ecommerce.datablitz.com.ph/")
+
+            expect (page.get_by_role("heading", name="Featured Console Accessories")).to_be_visible()
+
+            expect (page.locator("#shopify-section-16166609178585f189").get_by_text("View all ")).to_be_visible()
+            page.locator('#shopify-section-16166609178585f189').get_by_text("View all ").click()
+            expect (page).to_have_url("https://ecommerce.datablitz.com.ph/collections/featured-console-accessories")
+            page.go_back()
+
+    def test_featured_console_accesories_products(self, page: Page):
+            page.goto("https://ecommerce.datablitz.com.ph/")
+
+            product = page.locator("#shopify-section-16166609178585f189 .product-item").count()
+
+            for i in range(product):
+              accesories_product = page.locator("#shopify-section-16166609178585f189 .product-item").nth(i)
+              expect(accesories_product.locator('.product-item__primary-image')).to_be_visible()
+              accesories_product.hover()
+              page.wait_for_timeout(500)
+              expect(accesories_product.locator('.product-item__secondary-image')).to_have_count(1)
+              accesories_product.click()
+              expect (page).to_have_url(re.compile(r"/collections/"))
+              page.go_back()
+
+              if accesories_product.locator(".product-label").count() > 0:
+                    expect (accesories_product.locator('.product-label')).to_be_visible()
+                    expect (accesories_product.locator('.price--highlight')).to_be_visible()
+                    expect (accesories_product.locator('.price--compare')).to_be_visible()
+                    print(f"console accesories product {i+1} has a label")
+
+              else:
+                    expect(accesories_product.locator('.price')).to_be_visible()
+                    print(f"console accesories {i+1} has a price")
+
+              expect(accesories_product.locator('.product-item__title')).to_be_visible()
+              accesories_product.locator('.product-item__title').click()
+              expect (page).to_have_url(re.compile(r"/collections/"))
+              page.go_back()
+              print(f"Featured console accesories {i+1} been tested")
