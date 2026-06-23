@@ -267,7 +267,7 @@ class TestDatablitzHomepage:
                          print(f"⚠️ Product {i+1}: UNKNOWN button type!")
                          print(newa_button.inner_html()[:500])
 
-    def test_new_arrivals_buttons(self, page: Page):
+    def test_new_arrivals_np_buttons(self, page: Page):
             page.goto("https://ecommerce.datablitz.com.ph/")
 
             next_button = page.locator("#shopify-section-1590542985479").get_by_role("button", name="Next")
@@ -397,6 +397,17 @@ class TestDatablitzHomepage:
               page.go_back()
               print(f"Featured switch product {i+1} been tested")
 
+    def test_switch_buttons(self, page: Page):
+            page.goto("https://ecommerce.datablitz.com.ph/")
+
+            next_button = page.locator("#shopify-section-1616581165983c351d").get_by_role("button", name="Next")
+            expect(next_button).to_be_visible()
+            next_button.click()
+
+            previous_button = page.locator("#shopify-section-1616581165983c351d").get_by_role("button", name="Previous")
+            expect(previous_button).to_be_visible()
+            previous_button.click()
+
     def test_featured_playstation(self, page: Page):
             page.goto("https://ecommerce.datablitz.com.ph/")
 
@@ -438,6 +449,17 @@ class TestDatablitzHomepage:
               page.go_back()
               print(f"Featured playstation product {i+1} been tested")
 
+    def test_playstation_buttons(self, page: Page):
+            page.goto("https://ecommerce.datablitz.com.ph/")
+
+            next_button = page.locator("#shopify-section-1616582529b9e27459").get_by_role("button", name="Next")
+            expect(next_button).to_be_visible()
+            next_button.click()
+
+            previous_button = page.locator("#shopify-section-1616582529b9e27459").get_by_role("button", name="Previous")
+            expect(previous_button).to_be_visible()
+            previous_button.click()
+
     def test_featured_xbox(self, page: Page):
             page.goto("https://ecommerce.datablitz.com.ph/")
 
@@ -478,6 +500,17 @@ class TestDatablitzHomepage:
               expect (page).to_have_url(re.compile(r"/products/"))
               page.go_back()
               print(f"Featured xbox product {i+1} been tested")
+
+    def test_xbox_buttons(self, page: Page):
+            page.goto("https://ecommerce.datablitz.com.ph/")
+
+            next_button = page.locator("#shopify-section-1616585015028b7de4").get_by_role("button", name="Next")
+            expect(next_button).to_be_visible()
+            next_button.click()
+
+            previous_button = page.locator("#shopify-section-1616585015028b7de4").get_by_role("button", name="Previous")
+            expect(previous_button).to_be_visible()
+            previous_button.click()
 
     def test_device_promos(self, page: Page):
           page.goto("https://ecommerce.datablitz.com.ph/")
@@ -575,6 +608,17 @@ class TestDatablitzHomepage:
               page.go_back()
               print(f"Featured console accesories {i+1} been tested")
 
+    def test_console_accesories_buttons(self, page: Page):
+            page.goto("https://ecommerce.datablitz.com.ph/")
+
+            next_button = page.locator("#shopify-section-16166609178585f189").get_by_role("button", name="Next")
+            expect(next_button).to_be_visible()
+            next_button.click()
+
+            previous_button = page.locator("#shopify-section-16166609178585f189").get_by_role("button", name="Previous")
+            expect(previous_button).to_be_visible()
+            previous_button.click()
+
     def test_driving_collections(self, page: Page):
           page.goto("https://ecommerce.datablitz.com.ph/")
           
@@ -638,6 +682,17 @@ class TestDatablitzHomepage:
               expect (page).to_have_url(re.compile(r"/products/"))
               page.go_back()
               print(f"Featured computer peripherals {i+1} been tested")
+
+    def test_computer_peripherals_buttons(self, page: Page):
+            page.goto("https://ecommerce.datablitz.com.ph/")
+
+            next_button = page.locator("#shopify-section-161666667899e763df").get_by_role("button", name="Next")
+            expect(next_button).to_be_visible()
+            next_button.click()
+
+            previous_button = page.locator("#shopify-section-161666667899e763df").get_by_role("button", name="Previous")
+            expect(previous_button).to_be_visible()
+            previous_button.click()
 
     def test_peripherals_collections(self, page: Page):
           page.goto("https://ecommerce.datablitz.com.ph/")
@@ -845,6 +900,17 @@ class TestDatablitzHomepage:
               page.go_back()
               print(f"Featured laptop {i+1} been tested")
 
+    def test_featured_laptops_buttons(self, page: Page):
+            page.goto("https://ecommerce.datablitz.com.ph/")
+
+            next_button = page.locator("#shopify-section-16167331070cdccb23").get_by_role("button", name="Next")
+            expect(next_button).to_be_visible()
+            next_button.click()
+
+            previous_button = page.locator("#shopify-section-16167331070cdccb23").get_by_role("button", name="Previous")
+            expect(previous_button).to_be_visible()
+            previous_button.click()
+
     def test_featured_pc_parts(self, page: Page):
             page.goto("https://ecommerce.datablitz.com.ph/")
 
@@ -886,6 +952,44 @@ class TestDatablitzHomepage:
               page.go_back()
               print(f"Featured PC parts {i+1} been tested")
 
+    def test_featured_pc_parts_buttons(self, page: Page):
+            page.goto("https://ecommerce.datablitz.com.ph/")
+
+            next_button = page.locator("#shopify-section-16643318579a4c7d0a").get_by_role("button", name="Next")
+            expect(next_button).to_be_visible()
+            next_button.click()
+
+            previous_button = page.locator("#shopify-section-16643318579a4c7d0a").get_by_role("button", name="Previous")
+            expect(previous_button).to_be_visible()
+            previous_button.click()
+
+    def test_pc_parts_collections_extend(self, page: Page):
+         page.goto("https://ecommerce.datablitz.com.ph/")
+
+         pc_parts = page.locator("#shopify-section-collection_list_KfYbE8 .collection-item").count()
+
+         for i in range(pc_parts):
+               product = page.locator("#shopify-section-collection_list_KfYbE8 .collection-item").nth(i)
+               expect (product.locator('.collection-item__image-wrapper ')).to_be_visible()
+               product.hover()
+               page.wait_for_timeout(500)
+               product.click()
+
+               expect (page).to_have_url(re.compile(r"/collections/"))
+               page.go_back()
+               print(f"Extended pc parts collections {i+1} tested")
+
+    def test_pc_parts_collections_buttons(self, page: Page):
+            page.goto("https://ecommerce.datablitz.com.ph/")
+
+            next_button = page.locator("#shopify-section-collection_list_KfYbE8").get_by_role("button", name="Next")
+            expect(next_button).to_be_visible()
+            next_button.click()
+
+            previous_button = page.locator("#shopify-section-collection_list_KfYbE8").get_by_role("button", name="Previous")
+            expect(previous_button).to_be_visible()
+            previous_button.click()
+
     def test_browse_parts_title(self, page: Page):
         page.goto("https://ecommerce.datablitz.com.ph/")
 
@@ -905,6 +1009,17 @@ class TestDatablitzHomepage:
                expect (page).to_have_url(re.compile(r"/collections/"))
                page.go_back()
                print(f"Product parts/components {i+1} tested")
+
+    def test_browse_parts_buttons(self, page: Page):
+            page.goto("https://ecommerce.datablitz.com.ph/")
+
+            next_button = page.locator("#shopify-section-1664331953e91cbf5a").get_by_role("button", name="Next")
+            expect(next_button).to_be_visible()
+            next_button.click()
+
+            previous_button = page.locator("#shopify-section-1664331953e91cbf5a").get_by_role("button", name="Previous")
+            expect(previous_button).to_be_visible()
+            previous_button.click()
 
     def test_home_end_content(self, page: Page):
         page.goto("https://ecommerce.datablitz.com.ph/")
