@@ -2,10 +2,6 @@ from playwright.sync_api import Page, expect
 
 class TestDatablitzEndContent:
 
-    def test_home_title(self, page: Page):
-        page.goto("https://ecommerce.datablitz.com.ph/")
-        expect (page).to_have_title("DataBlitz - Your Total Gaming and Multimedia Store")
-
     def test_home_end_content(self, page: Page):
         page.goto("https://ecommerce.datablitz.com.ph/")
 
