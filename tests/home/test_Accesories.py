@@ -24,8 +24,8 @@ class TestDatablitzAccesories:
               accesories_product.hover()
               page.wait_for_timeout(500)
               expect(accesories_product.locator('.product-item__secondary-image')).to_have_count(1)
-              accesories_product.click()
-              expect (page).to_have_url(re.compile(r"/collections/"))
+              accesories_product.locator('.product-item__image-wrapper').click()
+              expect (page).to_have_url(re.compile(r"/products/"))
               page.go_back()
 
               if accesories_product.locator(".product-label").count() > 0:
@@ -40,7 +40,7 @@ class TestDatablitzAccesories:
 
               expect(accesories_product.locator('.product-item__title')).to_be_visible()
               accesories_product.locator('.product-item__title').click()
-              expect (page).to_have_url(re.compile(r"/collections/"))
+              expect (page).to_have_url(re.compile(r"/products/"))
               page.go_back()
               print(f"Featured console accesories {i+1} been tested")
 
