@@ -1,9 +1,9 @@
 from playwright.sync_api import Page, expect
 import re
 
-class TestDatablitzAccesories:
+class TestDatablitzAccessories:
 
-    def test_featured_console_accesories(self, page: Page):
+    def test_featured_console_accessories(self, page: Page):
             page.goto("https://ecommerce.datablitz.com.ph/")
 
             expect (page.get_by_role("heading", name="Featured Console Accessories")).to_be_visible()
@@ -13,38 +13,38 @@ class TestDatablitzAccesories:
             expect (page).to_have_url("https://ecommerce.datablitz.com.ph/collections/featured-console-accessories")
             page.go_back()
 
-    def test_featured_console_accesories_products(self, page: Page):
+    def test_featured_console_accessories_products(self, page: Page):
             page.goto("https://ecommerce.datablitz.com.ph/")
 
             product = page.locator("#shopify-section-16166609178585f189 .product-item").count()
 
             for i in range(product):
-              accesories_product = page.locator("#shopify-section-16166609178585f189 .product-item").nth(i)
-              expect(accesories_product.locator('.product-item__primary-image')).to_be_visible()
-              accesories_product.hover()
+              accessories_product = page.locator("#shopify-section-16166609178585f189 .product-item").nth(i)
+              expect(accessories_product.locator('.product-item__primary-image')).to_be_visible()
+              accessories_product.hover()
               page.wait_for_timeout(500)
-              expect(accesories_product.locator('.product-item__secondary-image')).to_have_count(1)
-              accesories_product.locator('.product-item__image-wrapper').click()
+              expect(accessories_product.locator('.product-item__secondary-image')).to_have_count(1)
+              accessories_product.locator('.product-item__image-wrapper').click()
               expect (page).to_have_url(re.compile(r"/products/"))
               page.go_back()
 
-              if accesories_product.locator(".product-label").count() > 0:
-                    expect (accesories_product.locator('.product-label')).to_be_visible()
-                    expect (accesories_product.locator('.price--highlight')).to_be_visible()
-                    expect (accesories_product.locator('.price--compare')).to_be_visible()
+              if accessories_product.locator(".product-label").count() > 0:
+                    expect (accessories_product.locator('.product-label')).to_be_visible()
+                    expect (accessories_product.locator('.price--highlight')).to_be_visible()
+                    expect (accessories_product.locator('.price--compare')).to_be_visible()
                     print(f"Console accesories product {i+1} has a label")
 
               else:
-                    expect(accesories_product.locator('.price')).to_be_visible()
+                    expect(accessories_product.locator('.price')).to_be_visible()
                     print(f"Console accesories {i+1} has a price")
 
-              expect(accesories_product.locator('.product-item__title')).to_be_visible()
-              accesories_product.locator('.product-item__title').click()
+              expect(accessories_product.locator('.product-item__title')).to_be_visible()
+              accessories_product.locator('.product-item__title').click()
               expect (page).to_have_url(re.compile(r"/products/"))
               page.go_back()
-              print(f"Featured console accesories {i+1} been tested")
+              print(f"Featured console accessories {i+1} been tested")
 
-    def test_console_accesories_buttons(self, page: Page):
+    def test_console_accessories_buttons(self, page: Page):
             page.goto("https://ecommerce.datablitz.com.ph/")
 
             next_button = page.locator("#shopify-section-16166609178585f189").get_by_role("button", name="Next")

@@ -58,9 +58,9 @@ class TestDatablitzPeripherals:
     def test_peripherals_collections(self, page: Page):
           page.goto("https://ecommerce.datablitz.com.ph/")
           
-          peripherals_accesories = page.locator("#shopify-section-1590416962605 .promo-block").count()
+          peripherals_accessories = page.locator("#shopify-section-1590416962605 .promo-block").count()
 
-          for i in range(peripherals_accesories):
+          for i in range(peripherals_accessories):
                 product = page.locator("#shopify-section-1590416962605 .promo-block").nth(i)
 
                 expect (product.locator('.promo-block__image-wrapper')).to_be_visible()
@@ -76,14 +76,14 @@ class TestDatablitzPeripherals:
                 expect (page).to_have_url(re.compile(r"/collections/"))
 
                 page.go_back()
-                print(f"Product peripherals & accesories {i+1} been tested")
+                print(f"Product peripherals & accessories {i+1} been tested")
 
     def test_peripherals_collections_extend(self, page: Page):
          page.goto("https://ecommerce.datablitz.com.ph/")
 
-         peripherals_accesories = page.locator("#shopify-section-68a94125-6c7a-4f7d-bec8-e60f4da85b01 .collection-item").count()
+         peripherals_accessories = page.locator("#shopify-section-68a94125-6c7a-4f7d-bec8-e60f4da85b01 .collection-item").count()
 
-         for i in range(peripherals_accesories):
+         for i in range(peripherals_accessories):
                product = page.locator("#shopify-section-68a94125-6c7a-4f7d-bec8-e60f4da85b01 .collection-item").nth(i)
                expect (product.locator('.collection-item__image-wrapper ')).to_be_visible()
                product.hover()
