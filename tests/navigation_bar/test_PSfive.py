@@ -87,4 +87,5 @@ class TestNavBarPS5:
         expect (page).to_have_url("https://ecommerce.datablitz.com.ph/collections/playstation-5?pf_t_categories=Virtual+Reality")
         print(f"PS5 VR2 tested")
 
-        page.go_back()  
+        page.go_back()
+        
