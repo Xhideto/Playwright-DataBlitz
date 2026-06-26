@@ -147,3 +147,63 @@ class TestNavBarPS5:
             expect(page).to_have_url(re.compile(r"/collections/"))
             page.go_back()
             print(f"Genre '{text}' tested")
+
+    def test_playstation_five_accessories(self, page: Page):
+        page.goto("https://ecommerce.datablitz.com.ph/")
+
+        psfive = page.locator('.tmenu_navbar')
+
+        psfive.get_by_role('link', name="PS5", exact=True).hover()
+        page.wait_for_timeout(500)
+        expect (page.locator('.tmenu_submenu_type_mega')).to_be_visible()
+        print(f"PS5 submenu is seen")
+
+        expect (psfive.get_by_role("link", name="PS5 ACCESSORIES")).to_be_visible()
+        psfive.hover()
+        page.wait_for_timeout(500)
+        psfive.get_by_role("link", name="PS5 ACCESSORIES").click()
+        expect (page).to_have_url("https://ecommerce.datablitz.com.ph/collections/playstation-5?pf_t_categories=accessories")
+        print(f"PS5 Accessories is tested")
+
+        page.go_back()
+
+        page.locator('.tmenu_navbar').get_by_role('link', name="PS5", exact=True).hover()
+        page.wait_for_timeout(500)
+
+        accessories1 = page.locator('.tmenu_item_level_1.tmenu_col-2:has(a[title="PS5 ACCESSORIES"]) .tmenu_item_level_2').count()
+        accessories2 = page.locator('.tmenu_item_level_1.tmenu_col-2:has(a[title="PS5 ACCESSORIES"]) + .tmenu_item_level_1.tmenu_col-2 .tmenu_item_level_2').count()
+
+        for i in range(accessories1):
+            page.locator('.tmenu_navbar').get_by_role('link', name="PS5", exact=True).hover()
+            page.wait_for_timeout(500)
+
+            link = page.locator('.tmenu_item_level_1.tmenu_col-2:has(a[title="PS5 ACCESSORIES"]) .tmenu_item_level_2').nth(i)
+
+            text = link.locator('.tmenu_item_text').inner_text()
+            expect (link.locator('.tmenu_item_text')).to_be_visible()
+
+            link.hover()
+            page.wait_for_timeout(500)
+            link.locator('.tmenu_item_link').click()
+
+            expect(page).to_have_url(re.compile(r"/collections/"))
+            page.go_back()
+            print(f"Accessories '{text}' tested")
+
+        for i in range(accessories2):
+            page.locator('.tmenu_navbar').get_by_role('link', name="PS5", exact=True).hover()
+            page.wait_for_timeout(500)
+
+            link = page.locator('.tmenu_item_level_1.tmenu_col-2:has(a[title="PS5 ACCESSORIES"]) + .tmenu_item_level_1.tmenu_col-2 .tmenu_item_level_2').nth(i)
+
+            text = link.locator('.tmenu_item_text').inner_text()
+            expect (link.locator('.tmenu_item_text')).to_be_visible()
+
+            link.hover()
+            page.wait_for_timeout(500)
+            link.locator('.tmenu_item_link').click()
+
+            expect(page).to_have_url(re.compile(r"/collections/"))
+            page.go_back()
+            print(f"Accessories '{text}' tested")
+
