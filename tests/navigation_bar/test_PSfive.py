@@ -111,10 +111,10 @@ class TestNavBarPS5:
         page.locator('.tmenu_navbar').get_by_role('link', name="PS5", exact=True).hover()
         page.wait_for_timeout(500)
 
-        consoles1 = page.locator('.tmenu_item_level_1.tmenu_col-2:has(a[title="PS5 GAMES"]) .tmenu_item_level_2').count()
-        consoles2 = page.locator('.tmenu_item_level_1.tmenu_col-2:has(a[title="PS5 GAMES"]) + .tmenu_item_level_1.tmenu_col-2 .tmenu_item_level_2').count()
+        games1 = page.locator('.tmenu_item_level_1.tmenu_col-2:has(a[title="PS5 GAMES"]) .tmenu_item_level_2').count()
+        games2 = page.locator('.tmenu_item_level_1.tmenu_col-2:has(a[title="PS5 GAMES"]) + .tmenu_item_level_1.tmenu_col-2 .tmenu_item_level_2').count()
 
-        for i in range(consoles1):
+        for i in range(games1):
             page.locator('.tmenu_navbar').get_by_role('link', name="PS5", exact=True).hover()
             page.wait_for_timeout(500)
 
@@ -131,7 +131,7 @@ class TestNavBarPS5:
             page.go_back()
             print(f"Genre '{text}' tested")
 
-        for i in range(consoles2):
+        for i in range(games2):
             page.locator('.tmenu_navbar').get_by_role('link', name="PS5", exact=True).hover()
             page.wait_for_timeout(500)
 
