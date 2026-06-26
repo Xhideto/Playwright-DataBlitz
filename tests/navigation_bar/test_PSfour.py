@@ -48,3 +48,44 @@ class TestNavBarPS4:
 
             page.go_back()
             print(f"PS4 recommend game {i+1} tested")
+
+    def test_playstation_four_consoles(self, page: Page):
+        page.goto("https://ecommerce.datablitz.com.ph/")
+
+        psfour = page.locator('.tmenu_navbar')
+
+        psfour.get_by_role('link', name="PS4", exact=True).hover()
+        page.wait_for_timeout(500)
+        expect (page.locator('.tmenu_submenu_type_mega')).to_be_visible()
+        print(f"PS4 submenu is seen")
+
+        expect (psfour.get_by_role("link", name="PS4 CONSOLES")).to_be_visible()
+        psfour.hover()
+        page.wait_for_timeout(500)
+        psfour.get_by_role("link", name="PS4 CONSOLES").click()
+        expect (page).to_have_url("https://ecommerce.datablitz.com.ph/collections/playstation-4?pf_t_categories=Consoles")
+        print(f"PS4 Consoles is tested")
+
+        page.go_back()
+
+        page.locator('.tmenu_navbar').get_by_role('link', name="PS4", exact=True).hover()
+        page.wait_for_timeout(500)
+
+        psfour_links = page.locator('.tmenu_item_level_1.tmenu_col-3:has(a[title="PS4 CONSOLES"]) .tmenu_item_level_2').count()
+
+        for i in range(psfour_links):
+            page.locator('.tmenu_navbar').get_by_role('link', name="PS4", exact=True).hover()
+            page.wait_for_timeout(500)
+
+            link = page.locator('.tmenu_item_level_1.tmenu_col-3:has(a[title="PS4 CONSOLES"]) .tmenu_item_level_2').nth(i)
+
+            text = link.locator('.tmenu_item_text').inner_text()
+            expect (link.locator('.tmenu_item_text')).to_be_visible()
+
+            link.hover()
+            page.wait_for_timeout(500)
+            link.locator('.tmenu_item_link').click()
+
+            expect(page).to_have_url(re.compile(r"/collections/"))
+            page.go_back()
+            print(f"'{text}' tested")
