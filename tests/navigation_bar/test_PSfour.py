@@ -16,3 +16,35 @@ class TestNavBarPS4:
         page.wait_for_timeout(1000)
         page.go_back()
         print(f"PS4 submenu is seen")
+
+    def test_playstation_four_recommended(self, page: Page):
+        page.goto("https://ecommerce.datablitz.com.ph/")
+
+        psfour = page.locator('.tmenu_navbar')
+
+        psfour.get_by_role('link', name="PS4", exact=True).hover()
+        page.wait_for_timeout(500)
+        expect (page.locator('.tmenu_submenu_type_mega')).to_be_visible()
+        print(f"PS4 submenu is works")
+
+        expect (page.get_by_text("PS4 We Recommend")).to_be_visible()
+        print(f"The title is tested")
+
+        recommend_games = page.locator('.tmenu_item_layout_image').count()
+
+        for i in range(recommend_games):
+            page.locator('.tmenu_navbar').get_by_role('link', name="PS4", exact=True).hover()
+            page.wait_for_timeout(500)
+
+            game = page.locator('.tmenu_item_layout_image').nth(i)
+            expect (game.locator('.tmenu_image')).to_be_visible()
+
+            game.hover()
+            page.wait_for_timeout(500)
+            game.locator('.tmenu_item_link').click()
+            expect (page).to_have_url(re.compile(r"/products/"))
+
+            page.wait_for_timeout(1500)
+
+            page.go_back()
+            print(f"PS4 recommend game {i+1} tested")
