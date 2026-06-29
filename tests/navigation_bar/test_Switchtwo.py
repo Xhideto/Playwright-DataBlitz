@@ -167,3 +167,70 @@ class TestNavBarSwitch:
             expect (page).to_have_url(re.compile(r"/collections/"))
             page.go_back()
             print(f"Genre '{text}' tested")
+
+    def test_switch_two_accessories(self, page: Page):
+        page.goto("https://ecommerce.datablitz.com.ph/")
+
+        switch_two = page.locator('.tmenu_navbar')
+
+        switch_two.get_by_title('SWITCH').hover()
+        page.wait_for_timeout(500)
+        expect (page.locator('.tmenu_submenu_type_tab')).to_be_visible()
+
+        expect (switch_two.get_by_role('tab', name="SWITCH 2")).to_be_visible()
+        expect(switch_two.get_by_role("tab", name="Switch 2 NEW!")).to_be_visible()
+        print(f"'New' Badge is visible")
+
+        expect (switch_two.get_by_role('link', name="SWITCH 2 ACCESSORIES", exact=True)).to_be_visible()
+        switch_two.hover()
+        page.wait_for_timeout(500)
+        switch_two.get_by_role('link', name="SWITCH 2 ACCESSORIES", exact=True).click()
+        expect (page).to_have_url("https://ecommerce.datablitz.com.ph/collections/nintendo-switch-2-accessories")
+
+        page.wait_for_timeout(1000)
+        page.go_back()
+
+        page.locator('.tmenu_navbar').get_by_title('SWITCH', exact=True).hover()
+        page.wait_for_timeout(500)
+
+        accessories1 = page.locator('.tmenu_item_level_1.tmenu_col-2:has(a[title="SWITCH 2 ACCESSORIES"]) .tmenu_item_level_2').count()
+        accessories2 = page.locator('.tmenu_item_level_1.tmenu_col-2:has(a[title="SWITCH 2 ACCESSORIES"]) + .tmenu_item_level_1.tmenu_col-3 .tmenu_item_level_2').count()
+
+        for i in range(accessories1):
+
+            page.locator('.tmenu_navbar').get_by_title('SWITCH', exact=True).hover()
+            page.wait_for_timeout(500)
+
+            page.get_by_role('tab', name="SWITCH 2").hover()
+            page.wait_for_timeout(500)
+
+            link = page.locator('.tmenu_item_level_1.tmenu_col-2:has(a[title="SWITCH 2 ACCESSORIES"]) .tmenu_item_level_2').nth(i)
+
+            text = link.locator('.tmenu_item_text').inner_text()
+            expect (link.locator('.tmenu_item_text')).to_be_visible()
+
+            link.locator('.tmenu_item_link').evaluate("el => el.click()")
+
+            expect (page).to_have_url(re.compile(r"/collections/"))
+            page.go_back()
+            print(f"Accessories '{text}' tested")
+
+        for i in range(accessories2):
+
+            page.locator('.tmenu_navbar').get_by_title('SWITCH', exact=True).hover()
+            page.wait_for_timeout(500)
+
+            page.get_by_role('tab', name="SWITCH 2").hover()
+            page.wait_for_timeout(500)
+
+            link = page.locator('.tmenu_item_level_1.tmenu_col-2:has(a[title="SWITCH 2 ACCESSORIES"]) + .tmenu_item_level_1.tmenu_col-3 .tmenu_item_level_2').nth(i)
+
+            text = link.locator('.tmenu_item_text').inner_text()
+            expect (link.locator('.tmenu_item_text')).to_be_visible()
+
+            link.locator('.tmenu_item_link').evaluate("el => el.click()")
+
+            expect (page).to_have_url(re.compile(r"/collections/"))
+            page.go_back()
+            print(f"Accessories '{text}' tested")
+            
