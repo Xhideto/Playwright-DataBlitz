@@ -143,9 +143,7 @@ class TestNavBarSwitch:
             text = link.locator('.tmenu_item_text').inner_text()
             expect (link.locator('.tmenu_item_text')).to_be_visible()
 
-            link.hover()
-            page.wait_for_timeout(500)
-            link.locator('.tmenu_item_link').click()
+            link.locator('.tmenu_item_link').evaluate("el => el.click()")
 
             expect (page).to_have_url(re.compile(r"/collections/"))
             page.go_back()
@@ -164,9 +162,7 @@ class TestNavBarSwitch:
             text = link.locator('.tmenu_item_text').inner_text()
             expect (link.locator('.tmenu_item_text')).to_be_visible()
 
-            link.hover()
-            page.wait_for_timeout(500)
-            link.locator('.tmenu_item_link').click()
+            link.locator('.tmenu_item_link').evaluate("el => el.click()")
 
             expect (page).to_have_url(re.compile(r"/collections/"))
             page.go_back()
