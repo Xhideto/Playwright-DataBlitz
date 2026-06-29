@@ -2,33 +2,33 @@ from playwright.sync_api import Page, expect
 import re
 
 class TestNavBarSwitch:
-    # def test_switch_sub_menu(self, page: Page):
-    #     page.goto("https://ecommerce.datablitz.com.ph/")
+    def test_switch_sub_menu(self, page: Page):
+        page.goto("https://ecommerce.datablitz.com.ph/")
 
-    #     switch = page.locator('.tmenu_navbar')
+        switch = page.locator('.tmenu_navbar')
 
-    #     switch.get_by_title('SWITCH').hover()
-    #     page.wait_for_timeout(500)
-    #     expect (page.locator('.tmenu_submenu_type_tab')).to_be_visible()
+        switch.get_by_title('SWITCH').hover()
+        page.wait_for_timeout(500)
+        expect (page.locator('.tmenu_submenu_type_tab')).to_be_visible()
 
-    #     expect (switch.get_by_role('tab', name="Switch", exact=True)).to_be_visible()
+        expect (switch.get_by_role('tab', name="Switch", exact=True)).to_be_visible()
 
-    #     switch.get_by_role('tab', name="Switch", exact=True).click()
-    #     expect (page).to_have_url("https://ecommerce.datablitz.com.ph/collections/nintendo-switch")
-    #     page.wait_for_timeout(1500)
-    #     page.go_back()
-    #     print(f"Switch submenu is seen")
+        switch.get_by_role('tab', name="Switch", exact=True).click()
+        expect (page).to_have_url("https://ecommerce.datablitz.com.ph/collections/nintendo-switch")
+        page.wait_for_timeout(1500)
+        page.go_back()
+        print(f"Switch submenu is seen")
 
     def test_switch_recommend(self, page: Page):
         page.goto("https://ecommerce.datablitz.com.ph/")
 
-        switch_two = page.locator('.tmenu_navbar')
+        switch = page.locator('.tmenu_navbar')
 
-        switch_two.get_by_title('SWITCH').hover()
+        switch.get_by_title('SWITCH').hover()
         page.wait_for_timeout(500)
         expect (page.locator('.tmenu_submenu_type_tab')).to_be_visible()
 
-        expect (switch_two.get_by_role('tab', name="Switch", exact=True)).to_be_visible()
+        expect (switch.get_by_role('tab', name="Switch", exact=True)).to_be_visible()
 
         expect (page.get_by_text("Switch We Recommend")).to_be_visible()
         print(f"The title is tested")
@@ -55,3 +55,45 @@ class TestNavBarSwitch:
             page.go_back()
             page.wait_for_timeout(500)
             print(f"Switch recommend game {i+1} tested")
+
+    def test_switch_handheld(self, page: Page):
+        page.goto("https://ecommerce.datablitz.com.ph/")
+
+        switch = page.locator('.tmenu_navbar')
+
+        switch.get_by_title('SWITCH').hover()
+        page.wait_for_timeout(500)
+        expect (page.locator('.tmenu_submenu_type_tab')).to_be_visible()
+
+        expect (switch.get_by_role('tab', name="Switch", exact=True)).to_be_visible()
+        switch.get_by_role('tab', name="Switch", exact=True).hover()
+        page.wait_for_timeout(500)
+
+        expect (switch.get_by_role('link', name="SWITCH CONSOLE", exact=True)).to_be_visible()
+        switch.hover()
+        page.wait_for_timeout(500)
+        switch.get_by_role('link', name="SWITCH CONSOLE", exact=True).click()
+        expect (page).to_have_url("https://ecommerce.datablitz.com.ph/collections/category-nintendo-switch-console?pf_t_categories=Consoles")
+
+        page.wait_for_timeout(1000)
+        page.go_back()
+
+        page.locator('.tmenu_navbar').get_by_title('SWITCH', exact=True).hover()
+        page.wait_for_timeout(500)
+
+        page.get_by_role('tab', name="Switch", exact=True).hover()
+        page.wait_for_timeout(500)
+
+        link = page.locator('.tmenu_item_level_1.tmenu_col-3:has(a[title="SWITCH CONSOLE"]) .tmenu_item_level_2')
+
+        text = link.locator('.tmenu_item_text').inner_text()
+        expect (link.locator('.tmenu_item_text')).to_be_visible()
+
+        link.hover()
+        page.wait_for_timeout(500)
+        link.locator('.tmenu_item_link').click()
+        expect (page).to_have_url("https://ecommerce.datablitz.com.ph/collections/nintendo-switch?pf_t_categories=Consoles")
+        
+        page.wait_for_timeout(1000)
+        page.go_back()
+        print(f"'{text}' tested")

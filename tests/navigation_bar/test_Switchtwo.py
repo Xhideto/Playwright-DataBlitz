@@ -60,7 +60,7 @@ class TestNavBarSwitchTwo:
             page.wait_for_timeout(500)
             print(f"Switch 2 recommend game {i+1} tested")
 
-    def test_switch_two_handhelds(self, page: Page):
+    def test_switch_two_handheld(self, page: Page):
         page.goto("https://ecommerce.datablitz.com.ph/")
 
         switch_two = page.locator('.tmenu_navbar')
