@@ -1,7 +1,7 @@
 from playwright.sync_api import Page, expect
 import re
 
-class TestNavBarSwitch:
+class TestNavBarSwitchTwo:
     def test_switch_two_sub_menu(self, page: Page):
         page.goto("https://ecommerce.datablitz.com.ph/")
 
