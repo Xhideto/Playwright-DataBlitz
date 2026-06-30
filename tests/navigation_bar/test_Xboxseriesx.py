@@ -97,3 +97,69 @@ class TestNavBarXboxSeriesX:
         page.wait_for_timeout(1000)
         page.go_back()
         print(f"'{text}' tested")
+
+    def test_xbox_x_games(self, page: Page):
+        page.goto("https://ecommerce.datablitz.com.ph/")
+
+        xbox_x = page.locator('.tmenu_navbar')
+
+        xbox_x.get_by_title('XBOX').hover()
+        page.wait_for_timeout(500)
+        expect (page.locator('.tmenu_submenu_type_tab')).to_be_visible()
+
+        expect (xbox_x.get_by_role('tab', name="Xbox Series X")).to_be_visible()
+        page.get_by_role('tab', name="Xbox Series X").hover()
+        page.wait_for_timeout(500)
+
+        expect (xbox_x.get_by_role('link', name="XBOXSX GAMES", exact=True)).to_be_visible()
+        xbox_x.hover()
+        page.wait_for_timeout(500)
+        xbox_x.get_by_role('link', name="XBOXSX GAMES", exact=True).click()
+        expect (page).to_have_url("https://ecommerce.datablitz.com.ph/collections/xbox-games")
+
+        page.wait_for_timeout(1000)
+        page.go_back()
+
+        page.locator('.tmenu_navbar').get_by_title('XBOX', exact=True).hover()
+        page.wait_for_timeout(500)
+
+        games1 = page.locator('.tmenu_item_level_1.tmenu_col-2:has(a[title="XBOXSX GAMES"]) .tmenu_item_level_2').count()
+        games2 = page.locator('.tmenu_item_level_1.tmenu_col-2:has(a[title="XBOXSX GAMES"]) + .tmenu_item_level_1.tmenu_col-2 .tmenu_item_level_2').count()
+
+        for i in range(games1):
+
+            page.locator('.tmenu_navbar').get_by_title('XBOX', exact=True).hover()
+            page.wait_for_timeout(500)
+
+            page.get_by_role('tab', name="Xbox Series X").hover()
+            page.wait_for_timeout(500)
+
+            link = page.locator('.tmenu_item_level_1.tmenu_col-2:has(a[title="XBOXSX GAMES"]) .tmenu_item_level_2').nth(i)
+
+            text = link.locator('.tmenu_item_text').inner_text()
+            expect (link.locator('.tmenu_item_text')).to_be_visible()
+
+            link.locator('.tmenu_item_link').evaluate("el => el.click()")
+
+            expect (page).to_have_url(re.compile(r"/collections/"))
+            page.go_back()
+            print(f"Genre '{text}' tested")
+
+        for i in range(games2):
+
+            page.locator('.tmenu_navbar').get_by_title('XBOX', exact=True).hover()
+            page.wait_for_timeout(500)
+
+            page.get_by_role('tab', name="Xbox Series X").hover()
+            page.wait_for_timeout(500)
+
+            link = page.locator('.tmenu_item_level_1.tmenu_col-2:has(a[title="XBOXSX GAMES"]) + .tmenu_item_level_1.tmenu_col-2 .tmenu_item_level_2').nth(i)
+
+            text = link.locator('.tmenu_item_text').inner_text()
+            expect (link.locator('.tmenu_item_text')).to_be_visible()
+
+            link.locator('.tmenu_item_link').evaluate("el => el.click()")
+
+            expect (page).to_have_url(re.compile(r"/collections/"))
+            page.go_back()
+            print(f"Genre '{text}' tested")
