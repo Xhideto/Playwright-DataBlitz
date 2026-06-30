@@ -55,3 +55,45 @@ class TestNavBarXboxSeriesX:
             page.go_back()
             page.wait_for_timeout(500)
             print(f"Xbox Series X recommend game {i+1} tested")
+
+    def test_xbox_x_console(self, page: Page):
+        page.goto("https://ecommerce.datablitz.com.ph/")
+
+        xbox_x = page.locator('.tmenu_navbar')
+
+        xbox_x.get_by_title('XBOX').hover()
+        page.wait_for_timeout(500)
+        expect (page.locator('.tmenu_submenu_type_tab')).to_be_visible()
+
+        expect (xbox_x.get_by_role('tab', name="Xbox Series X", exact=True)).to_be_visible()
+        page.get_by_role('tab', name="Xbox Series X", exact=True).hover()
+        page.wait_for_timeout(500)
+
+        expect (xbox_x.get_by_role('link', name="XBOXSX CONSOLE", exact=True)).to_be_visible()
+        xbox_x.hover()
+        page.wait_for_timeout(500)
+        xbox_x.get_by_role('link', name="XBOXSX CONSOLE", exact=True).click()
+        expect (page).to_have_url("https://ecommerce.datablitz.com.ph/collections/xbox-series-x?pf_t_categories=Consoles")
+
+        page.wait_for_timeout(1000)
+        page.go_back()
+
+        page.locator('.tmenu_navbar').get_by_title('XBOX', exact=True).hover()
+        page.wait_for_timeout(500)
+
+        page.get_by_role('tab', name="Xbox Series X").hover()
+        page.wait_for_timeout(500)
+
+        link = page.locator('.tmenu_item_level_1.tmenu_col-3:has(a[title="XBOXSX CONSOLE"]) .tmenu_item_level_2')
+
+        text = link.locator('.tmenu_item_text').inner_text()
+        expect (link.locator('.tmenu_item_text')).to_be_visible()
+
+        link.hover()
+        page.wait_for_timeout(500)
+        link.locator('.tmenu_item_link').click()
+        expect (page).to_have_url("https://ecommerce.datablitz.com.ph/collections/xbox-series-x?pf_t_categories=Consoles")
+        
+        page.wait_for_timeout(1000)
+        page.go_back()
+        print(f"'{text}' tested")
