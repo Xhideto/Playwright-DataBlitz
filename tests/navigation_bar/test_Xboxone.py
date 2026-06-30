@@ -54,7 +54,7 @@ class TestNavBarXboxOne:
 
             page.go_back()
             page.wait_for_timeout(500)
-            print(f"Switch recommend game {i+1} tested")
+            print(f"Xbox One recommended game {i+1} tested")
 
     def test_xbox_one_games(self, page: Page):
         page.goto("https://ecommerce.datablitz.com.ph/")
