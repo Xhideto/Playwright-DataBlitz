@@ -62,7 +62,7 @@ class TestNavBarPcAccessories:
 
             page.go_back()
             page.wait_for_timeout(500)
-            print(f"PC/Mac recommended peripherals {i+1} tested")
+            print(f"PC/Mac recommended Peripherals & Accessories {i+1} tested")
 
     def test_pc_accessories_categories(self, page: Page):
         page.goto("https://ecommerce.datablitz.com.ph/")
