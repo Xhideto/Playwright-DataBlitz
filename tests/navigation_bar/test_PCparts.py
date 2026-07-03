@@ -54,3 +54,88 @@ class TestNavBarPcParts:
             page.go_back()
             page.wait_for_timeout(500)
             print(f"PC/Mac recommended PC Parts & Components {i+1} tested")
+
+    def test_pc_parts_categories(self, page: Page):
+        page.goto("https://ecommerce.datablitz.com.ph/")
+
+        pc_parts = page.locator('.tmenu_navbar')
+
+        pc_parts.get_by_role('link', name="PC/ Mac").hover()
+        page.wait_for_timeout(500)
+        expect (page.locator('.tmenu_submenu_type_tab')).to_be_visible()
+
+        expect (pc_parts.get_by_role('tab', name="PC Parts & Components")).to_be_visible()
+        pc_parts.get_by_role('tab', name="PC Parts & Components").hover()
+
+        expect (pc_parts.locator('.tmenu_submenu_tab_active').get_by_role('link', name="Categories")).to_be_visible()
+        pc_parts.locator('.tmenu_submenu_tab_active').get_by_role('link', name="Categories").click()
+        expect (page).to_have_url("https://ecommerce.datablitz.com.ph/collections/category-nintendo-switch-console?pf_t_categories=Consoles") #When clicked idk why it directs to this link
+
+        page.wait_for_timeout(1000)
+        page.go_back()
+
+        print(f"Categories is working")
+
+        page.locator('.tmenu_navbar').get_by_role('link', name="PC/ Mac").hover()
+        page.wait_for_timeout(500)
+
+        categories1 = page.locator('#tmenu-tabpanel-tmenu-menu-386195 .tmenu_item_level_1.tmenu_col-4:has(a[title="Categories"]) .tmenu_item_level_2').count()
+        categories2 = page.locator('#tmenu-tabpanel-tmenu-menu-386195 .tmenu_item_level_1.tmenu_col-4:has(a[title="Categories"]) + .tmenu_item_level_1.tmenu_col-4 .tmenu_item_level_2').count()
+        categories3 = page.locator('#tmenu-tabpanel-tmenu-menu-386195 .tmenu_item_level_1.tmenu_col-4:has(a[title="Categories"]) + .tmenu_item_level_1.tmenu_col-4 + .tmenu_item_level_1.tmenu_col-4 .tmenu_item_level_2').count()
+
+        for i in range(categories1):
+            page.get_by_role('link', name="PC/ Mac").hover()
+            page.wait_for_timeout(500)
+
+            page.get_by_role('tab', name="PC Parts & Components").hover()
+            page.wait_for_timeout(500)
+
+            link = page.locator('#tmenu-tabpanel-tmenu-menu-386195 .tmenu_item_level_1.tmenu_col-4:has(a[title="Categories"]) .tmenu_item_level_2').nth(i)
+
+            text = link.locator('.tmenu_item_text').inner_text()
+            expect (link.locator('.tmenu_item_text')).to_be_visible()
+
+            link.locator('.tmenu_item_link').evaluate("el => el.click()")
+
+            expect (page).to_have_url(re.compile(r"/collections/"))
+            page.wait_for_timeout(500)
+            page.go_back()
+            print(f"Categories '{text}' tested")
+
+        for i in range(categories2):
+            page.get_by_role('link', name="PC/ Mac").hover()
+            page.wait_for_timeout(500)
+
+            page.get_by_role('tab', name="PC Parts & Components").hover()
+            page.wait_for_timeout(500)
+
+            link = page.locator('#tmenu-tabpanel-tmenu-menu-386195 .tmenu_item_level_1.tmenu_col-4:has(a[title="Categories"]) + .tmenu_item_level_1.tmenu_col-4 .tmenu_item_level_2').nth(i)
+
+            text = link.locator('.tmenu_item_text').inner_text()
+            expect (link.locator('.tmenu_item_text')).to_be_visible()
+
+            link.locator('.tmenu_item_link').evaluate("el => el.click()")
+
+            expect (page).to_have_url(re.compile(r"/collections/"))
+            page.wait_for_timeout(500)
+            page.go_back()
+            print(f"Categories '{text}' tested")
+
+        for i in range(categories3):
+            page.get_by_role('link', name="PC/ Mac").hover()
+            page.wait_for_timeout(500)
+
+            page.get_by_role('tab', name="PC Parts & Components").hover()
+            page.wait_for_timeout(500)
+
+            link = page.locator('#tmenu-tabpanel-tmenu-menu-386195 .tmenu_item_level_1.tmenu_col-4:has(a[title="Categories"]) + .tmenu_item_level_1.tmenu_col-4 + .tmenu_item_level_1.tmenu_col-4 .tmenu_item_level_2').nth(i)
+
+            text = link.locator('.tmenu_item_text').inner_text()
+            expect (link.locator('.tmenu_item_text')).to_be_visible()
+
+            link.locator('.tmenu_item_link').evaluate("el => el.click()")
+
+            expect (page).to_have_url(re.compile(r"/collections/"))
+            page.wait_for_timeout(500)
+            page.go_back()
+            print(f"Categories '{text}' tested")
