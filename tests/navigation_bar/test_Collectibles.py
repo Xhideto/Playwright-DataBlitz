@@ -57,9 +57,9 @@ class TestNavBarCollectibles:
         expect (collect.get_by_role('link', name="TOYS & GAMES")).to_be_visible()
         print(f"Categories title is visible")
 
-        collectibles2 = page.locator('.tmenu_item_level_1:has(a[title="TOYS & GAMES"]) .tmenu_item_level_2').count()
+        collectibles = page.locator('.tmenu_item_level_1:has(a[title="TOYS & GAMES"]) .tmenu_item_level_2').count()
 
-        for i in range(collectibles2):
+        for i in range(collectibles):
             page.locator('.tmenu_navbar').get_by_role('link', name="Collectibles", exact=True).hover()
             page.wait_for_timeout(500)
 
