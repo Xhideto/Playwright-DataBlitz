@@ -43,3 +43,41 @@ class TestNavBarCollectibles:
             page.wait_for_timeout(1000)
             page.go_back()
             print(f"Recommended collectibles {i+1} tested")
+
+    def test_collectibles_toys_games(self, page: Page):
+        page.goto("https://ecommerce.datablitz.com.ph/")
+
+        collect = page.locator('.tmenu_navbar')
+
+        collect.get_by_role('link', name="Collectibles", exact=True).hover()
+        page.wait_for_timeout(500)
+        expect (page.locator('.tmenu_submenu_type_mega')).to_be_visible()
+        print(f"Collectibles submenu is visible")
+
+        expect (collect.get_by_role('link', name="TOYS & GAMES")).to_be_visible()
+        print(f"Categories title is visible")
+
+        collectibles2 = page.locator('.tmenu_item_level_1:has(a[title="TOYS & GAMES"]) .tmenu_item_level_2').count()
+
+        for i in range(collectibles2):
+            page.locator('.tmenu_navbar').get_by_role('link', name="Collectibles", exact=True).hover()
+            page.wait_for_timeout(500)
+
+            link = page.locator('.tmenu_item_level_1:has(a[title="TOYS & GAMES"]) .tmenu_item_level_2').nth(i)
+            text = link.locator(".tmenu_item_text").inner_text()
+
+            expect (link.locator('.tmenu_item_text')).to_be_visible()
+
+            link.locator('.tmenu_item_link').click()
+
+            url = page.url
+
+            if "/collections/" in url:
+                print(f"Collection '{text}' tested")
+            elif "pages" in url:
+                print(f"Page '{text}' tested")
+            else:
+                print(f"No url found")
+
+            page.wait_for_timeout(1000)
+            page.go_back()
