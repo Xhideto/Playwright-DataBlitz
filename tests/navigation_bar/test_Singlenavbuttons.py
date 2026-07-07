@@ -46,3 +46,15 @@ class TestNavBarSingleMenus:
         expect (page).to_have_url("https://ecommerce.datablitz.com.ph/pages/bundles-and-promos")
         page.wait_for_timeout(1000)
         print(f"Promos is working")
+
+    def test_order_status(self, page: Page):
+        page.goto("https://ecommerce.datablitz.com.ph/")
+
+        status = page.locator(".tmenu_navbar")
+
+        status.get_by_role('link', name="Order Status").hover()
+        page.wait_for_timeout(500)
+        status.get_by_role("link", name='Order Status', exact=True).click()
+        expect (page).to_have_url("https://ecommerce.datablitz.com.ph/pages/order-status-lookup")
+        page.wait_for_timeout(1000)
+        print(f"Order Status is working")
