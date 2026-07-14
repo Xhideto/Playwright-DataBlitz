@@ -42,5 +42,6 @@ class TestDatablitzFilters:
 
             option.locator('.boost-pfs-filter-button').click()
             expect (page).to_have_url(re.compile(r"collections"))
-            page.go_back()
+            page.locator('.boost-pfs-filter-refine-by-wrapper').locator('button[aria-label="Clear"]').first.click()
+            page.wait_for_timeout(500)
             print(f"'{text}' tested")
