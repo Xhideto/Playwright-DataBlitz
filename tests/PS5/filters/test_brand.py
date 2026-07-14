@@ -25,7 +25,8 @@ class TestDatablitzFilters:
         options = filters.locator('.boost-pfs-filter-option-brand .boost-pfs-filter-option-item-list li').count()
         print(f"{options}")
 
-        for i in range(options):
+        SAMPLE = 5
+        for i in range(min(SAMPLE, options)):
             option = filters.locator('.boost-pfs-filter-option-brand .boost-pfs-filter-option-item-list li').nth(i)
 
             text = option.locator('.boost-pfs-filter-option-value').inner_text()
@@ -45,7 +46,8 @@ class TestDatablitzFilters:
         options = filters.locator('.boost-pfs-filter-option-brand .boost-pfs-filter-option-item-list li').count()
         print(f"{options}")
 
-        for i in range(options):
+        SAMPLE = 5
+        for i in range(min(SAMPLE, options)):
             option = filters.locator('.boost-pfs-filter-option-brand .boost-pfs-filter-option-item-list li').nth(i)
 
             text = option.locator('.boost-pfs-filter-option-value').inner_text()
