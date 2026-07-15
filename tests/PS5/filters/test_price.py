@@ -52,3 +52,26 @@ class TestDatablitzFilters:
         page.locator('.boost-pfs-filter-clear').first.click()
         page.wait_for_timeout(500)
         print(f"Price is now clear")
+
+    def test_min_max_price_input(self, page: Page):
+        page.goto("https://ecommerce.datablitz.com.ph/collections/playstation-5")
+
+        filters = page.locator('.card')
+        price_box = filters.locator('.boost-pfs-filter-option-range-amount')
+
+        price_box.get_by_label('Min Price').fill('2500')
+        expect (price_box.get_by_label('Min Price')).to_have_value('2500')
+        print(f"2500 minimum range is entered")
+
+        expect (price_box.locator('.boost-pfs-filter-option-range-amount-split'))
+
+        price_box.get_by_label('Max Price').fill('6000')
+        expect (price_box.get_by_label('Max Price')).to_have_value('6000')
+        print(f"6000 maximum range is entered")
+
+        page.keyboard.press('Enter')
+        page.wait_for_timeout(500)
+
+        page.locator('.boost-pfs-filter-clear').first.click()
+        page.wait_for_timeout(500)
+        print(f"Price is now clear")
