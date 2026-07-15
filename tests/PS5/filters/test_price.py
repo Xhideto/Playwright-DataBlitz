@@ -16,3 +16,21 @@ class TestDatablitzFilters:
         price.click()
         page.wait_for_timeout(300)
         print(f"Price option is working")
+
+    def test_min_price_input_box(self, page: Page):
+        page.goto("https://ecommerce.datablitz.com.ph/collections/playstation-5")
+
+        filters = page.locator('.card')
+        price_box = filters.locator('.boost-pfs-filter-option-range-amount')
+
+        price_box.get_by_label('Min Price').fill('1000')
+        expect (price_box.get_by_label('Min Price')).to_have_value('1000')
+        page.keyboard.press('Enter')
+
+        expect (page).to_have_url(re.compile(r"/collections/"))
+        page.wait_for_timeout(500)
+        print(f"1000 price range is entered")
+
+        page.locator('.boost-pfs-filter-clear').first.click()
+        page.wait_for_timeout(500)
+        print(f"Price is now clear")
