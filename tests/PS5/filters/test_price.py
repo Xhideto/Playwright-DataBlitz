@@ -75,3 +75,41 @@ class TestDatablitzFilters:
         page.locator('.boost-pfs-filter-clear').first.click()
         page.wait_for_timeout(500)
         print(f"Price is now clear")
+
+    def test_min_max_price_slider(self, page: Page):
+        page.goto("https://ecommerce.datablitz.com.ph/collections/playstation-5")
+
+        filters = page.locator('.card')
+
+        min_slide = filters.locator('.noUi-handle-lower')
+        max_slide = filters.locator('.noUi-handle-upper')
+
+        expect (min_slide).to_be_visible()
+        expect (max_slide).to_be_visible()
+        print(f"Both minimum and maximum price slider are visible")
+        
+        min_slide.click()
+        page.wait_for_timeout(500)
+
+        for _ in range(100):
+            page.keyboard.press('ArrowRight')
+        page.wait_for_timeout(500)
+
+        new_min_price = min_slide.get_attribute('aria-valuenow')
+        print(f"New min price is now '{new_min_price}'")
+
+        max_slide.click()
+        page.wait_for_timeout(500)
+
+        for _ in range(100):
+            page.keyboard.press('ArrowLeft')
+        page.wait_for_timeout(500)
+
+        new_max_price = max_slide.get_attribute('aria-valuenow')
+        print(f"New max price is now '{new_max_price}'")
+
+        page.wait_for_timeout(500)
+
+        page.locator('.boost-pfs-filter-clear').first.click()
+        page.wait_for_timeout(500)
+        print(f"Minimum price slider works")
