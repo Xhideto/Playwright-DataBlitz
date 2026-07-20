@@ -11,3 +11,14 @@ class TestDatablitzFooter:
         banner = collection.locator('.collection__image')
         assert banner, "No image found"
         print(f"PS5 banner is visible")
+    
+    def test_ps5_header(self, page: Page):
+        page.goto("https://ecommerce.datablitz.com.ph/collections/playstation-5")
+
+        header = page.locator('.card__header')
+        
+        expect (header.locator('.collection__title')).to_be_visible()
+        print(f"PS5 header title is visible")
+
+        product_count = header.locator('.boost-pfs-filter-total-product').inner_text()
+        print(f"Product count: {product_count}")
