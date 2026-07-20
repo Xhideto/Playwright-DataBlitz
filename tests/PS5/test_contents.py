@@ -22,3 +22,32 @@ class TestDatablitzFooter:
 
         product_count = header.locator('.boost-pfs-filter-total-product').inner_text()
         print(f"Product count: {product_count}")
+
+    def test_ps5_sort_by_tool(self, page: Page):
+        page.goto("https://ecommerce.datablitz.com.ph/collections/playstation-5")
+
+        sort = page.locator('.collection__toolbar')
+
+        expect (sort.locator('.value-picker-button')).to_be_visible()
+        print(f"Sort by tool is visible")
+
+        sort.locator('.value-picker-button').click()
+        expect(page.locator('.value-picker')).to_be_visible()
+        print(f"Sort selectors are visible")
+
+        selectors = page.locator('.value-picker__choice-list button').count()
+        print(f"{selectors}")
+
+        for i in range(selectors):
+            page.locator('.collection__toolbar').locator('.value-picker-button').click()
+
+            sort_by = page.locator('.value-picker__choice-list button').nth(i)
+
+            text = sort_by.inner_text()
+            expect (sort_by).to_be_visible()
+
+            sort_by.click()
+            page.wait_for_timeout(500)
+            expect (page).to_have_url(re.compile(r"/collections/"))
+
+            print(f"Sort by: {text}")
