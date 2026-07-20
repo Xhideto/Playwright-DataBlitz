@@ -51,3 +51,19 @@ class TestDatablitzFooter:
             expect (page).to_have_url(re.compile(r"/collections/"))
 
             print(f"Sort by: {text}")
+
+    def test_ps5_product_views(self, page: Page):
+        page.goto("https://ecommerce.datablitz.com.ph/collections/playstation-5")
+
+        view = page.locator('.collection__toolbar')
+
+        expect(view.locator('.collection__layout-label')).to_be_visible()
+        print(f"View is visible")
+
+        view.locator('button[aria-label="Display products as list"]').click()
+        page.wait_for_timeout(500)
+        print("Products are in list")
+
+        view.locator('button[aria-label="Display products as grid"]').click()
+        page.wait_for_timeout(500)
+        print(f"Products are once again in grid")
