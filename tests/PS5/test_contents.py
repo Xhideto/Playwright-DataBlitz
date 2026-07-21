@@ -67,3 +67,42 @@ class TestDatablitzFooter:
         view.locator('button[aria-label="Display products as grid"]').click()
         page.wait_for_timeout(500)
         print(f"Products are once again in grid")
+    
+    def test_ps5_products(self, page: Page):
+        page.goto("https://ecommerce.datablitz.com.ph/collections/playstation-5")
+
+        product = page.locator('.boost-pfs-filter-products .product-item').all()
+
+        LIMIT = 24
+
+        for i, product_img in enumerate(product[:LIMIT]):
+            expect (product_img.locator('.product-item__image-wrapper')).to_be_visible()
+            product_img.hover()
+            page.wait_for_timeout(500)
+            expect (product_img.locator('.product-item__image-wrapper--with-secondary')).to_have_count(1)
+
+            product_img.locator('.product-item__image-wrapper').click()
+            expect (page).to_have_url(re.compile(r"/collections/"))
+            page.wait_for_timeout(500)
+            page.go_back()
+            print(f"PS5 product {i+1} tested")
+
+            if product_img.locator('.product-label').count() > 0:
+                expect (product_img.locator('.product-label')).to_be_visible()
+                expect (product_img.locator('.price--highlight')).to_be_visible()
+                expect (product_img.locator('.price--compare')).to_be_visible()
+                print(f"This product {i+1} has a label on it")
+            else:
+                expect (product_img.locator('.price')).to_be_visible()
+                print(f"Product {i+1} has a standard price")
+
+            product_title = product_img.locator('.product-item__title')
+            
+            product_txt = product_title.inner_text()
+            expect (product_title).to_be_visible()
+
+            product_title.click()
+            expect (page).to_have_url(re.compile(r"/collections/"))
+            page.wait_for_timeout(500)
+            page.go_back()
+            print(f"PS5 {product_txt}")
