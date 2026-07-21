@@ -106,3 +106,17 @@ class TestDatablitzFooter:
             page.wait_for_timeout(500)
             page.go_back()
             print(f"PS5 {product_txt}")
+
+    def test_ps5_product_buttons(self, page: Page):
+        page.goto("https://ecommerce.datablitz.com.ph/collections/playstation-5")
+
+        product = page.locator('.boost-pfs-filter-products .product-item').all()
+
+        LIMIT = 24
+
+        for i, product_button in enumerate(product[:LIMIT]):
+            add_to_cart = product_button.locator('button[type="submit"]')
+            expect (add_to_cart).to_be_visible()
+            expect (add_to_cart).to_be_enabled()
+            print (f"Add to cart {i+1} been tested")
+                
