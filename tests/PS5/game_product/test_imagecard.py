@@ -21,4 +21,15 @@ class TestDatablitzPS5Product:
             expect (thumbnail).to_have_class(re.compile(r"is-nav-selected"))
             print(f"Scroller thumbnail {i+1} tested")
 
+    def test_selected_image(self, page: Page):
+        page.goto("https://ecommerce.datablitz.com.ph/products/ps5-assassins-creed-black-flag-resynced")
 
+        image = page.locator('.card__section')
+
+        expect (image.locator('.product-gallery__carousel')).to_be_visible()
+        image.locator('.product-gallery__carousel').hover()
+        page.wait_for_timeout(500)
+        print(f"Image is visible")
+
+        expect (image.locator('.product-gallery__zoom-notice')).to_be_visible()
+        print(f"Roll over image text is visible")
