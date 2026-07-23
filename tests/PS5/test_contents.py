@@ -1,7 +1,7 @@
 from playwright.sync_api import Page, expect
 import re
 
-class TestDatablitzFooter:
+class TestDatablitzPS5:
     def test_ps5_banner_image(self, page: Page):
         page.goto("https://ecommerce.datablitz.com.ph/collections/playstation-5")
 
