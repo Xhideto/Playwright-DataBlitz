@@ -31,3 +31,20 @@ class TestDatablitzPS5Product:
         page.wait_for_timeout(500)
         expect (page.locator('.gw-tooltip__wrapper')).to_be_visible()
         print(f"Review ratings is visible")
+
+    def test_product_reference(self, page: Page):
+        page.goto("https://ecommerce.datablitz.com.ph/products/ps5-assassins-creed-black-flag-resynced")
+
+        card = page.locator('.card__section')
+        reference = card.locator('.product-meta__reference')
+
+        expect (reference.locator('.product-meta__vendor')).to_be_visible()
+
+        reference.locator('.product-meta__vendor').click()
+        expect (page).to_have_url(re.compile(r"/collections/"))
+        page.wait_for_timeout(500)
+        page.go_back()
+        print(f"Ubisoft link is working")
+
+        expect (reference.locator('.product-meta__sku')).to_be_visible()
+        print(f"The product SKU is visible")
