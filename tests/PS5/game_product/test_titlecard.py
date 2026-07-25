@@ -85,3 +85,17 @@ class TestDatablitzPS5Product:
             page.wait_for_timeout(1000)
             print(f"{i+1} {url} is working")
             new_tab.close()
+
+    def test_product_description(self, page: Page):
+        page.goto("https://ecommerce.datablitz.com.ph/products/ps5-assassins-creed-black-flag-resynced")
+                
+        card = page.locator('.card__section')
+        short_descript = card.locator('.product-meta__short-description')
+
+        expect (short_descript.locator('.rte').first).to_be_visible()
+        print(f"The short description is visible")
+
+        expect (short_descript.get_by_role('link', name="See full description")).to_be_visible()
+        short_descript.get_by_role('link', name="See full description").click()
+        page.wait_for_timeout(500)
+        print(f"Full description expected")
