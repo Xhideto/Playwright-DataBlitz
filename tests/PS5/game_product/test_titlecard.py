@@ -48,3 +48,40 @@ class TestDatablitzPS5Product:
 
         expect (reference.locator('.product-meta__sku')).to_be_visible()
         print(f"The product SKU is visible")
+
+    def test_product_share_socials(self, page: Page):
+        page.goto("https://ecommerce.datablitz.com.ph/products/ps5-assassins-creed-black-flag-resynced")
+        
+        card = page.locator('.card__section')
+        socials = card.locator('.social-media__item-list').first
+
+        expect (socials).to_be_visible()
+        print(f"Social items are visible")
+
+        links = socials.locator('a[target="_blank"]').count()
+        assert links > 0, "No social links found"
+        print(f"Found {links} social links")
+
+        for i in range(links):
+            social = page.locator('.social-media__item-list')
+            link = social.locator('a[target="_blank"]').nth(i)
+
+            href = link.get_attribute('href')
+            print(f"{href}")
+
+            if href and href.startswith('mailto'):
+                assert 'mailto' in href
+                print(f"Link {i+1} is email share link ✅")
+                continue 
+
+            with page.expect_popup() as social_media:
+                link.click()
+
+            new_tab = social_media.value
+            new_tab.wait_for_load_state()
+
+            url = new_tab.url
+            expect (new_tab).to_have_url(re.compile(r"https"))
+            page.wait_for_timeout(1000)
+            print(f"{i+1} {url} is working")
+            new_tab.close()
