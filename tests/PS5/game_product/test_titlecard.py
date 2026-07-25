@@ -16,7 +16,7 @@ class TestDatablitzPS5Product:
 
         card = page.locator('.card__section')
 
-        expect (card.locator('.gw-rv-rating-stars').nth(1)).to_be_visible()
+        expect (card.locator('.gw-rv-rating-stars').first).to_be_visible()
         print(f"Review stars are visible")
 
         review_text = card.locator('.gw-text.gw-text--heading-sm').inner_text()
