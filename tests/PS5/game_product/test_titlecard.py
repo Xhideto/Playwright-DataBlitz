@@ -32,6 +32,18 @@ class TestDatablitzPS5Product:
         expect (page.locator('.gw-tooltip__wrapper')).to_be_visible()
         print(f"Review ratings is visible")
 
+    def test_product_badge(self, page: Page):
+            page.goto("https://ecommerce.datablitz.com.ph/products/ps5-assassins-creed-black-flag-resynced")
+    
+            card = page.locator('.card__section')
+            badge = card.locator('.badgetitle.primebText')
+    
+            expect (badge).to_be_visible()
+    
+            text = badge.inner_text()
+            assert "Free Shipping!" in text, "Free Shipping is not visible"
+            print(f"Badge {text} is visible")
+
     def test_product_reference(self, page: Page):
         page.goto("https://ecommerce.datablitz.com.ph/products/ps5-assassins-creed-black-flag-resynced")
 
