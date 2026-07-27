@@ -83,7 +83,7 @@ class TestDatablitzPS5Product:
 
             if href and href.startswith('mailto'):
                 assert 'mailto' in href
-                print(f"Link {i+1} is email share link ✅")
+                print(f"Link {i+1} is email share link")
                 continue 
 
             with page.expect_popup() as social_media:
@@ -124,3 +124,19 @@ class TestDatablitzPS5Product:
 
         text = (price).inner_text()
         print(f"Expected price: {text}")
+
+    def test_product_info_item(self, page: Page):
+        page.goto("https://ecommerce.datablitz.com.ph/products/ps5-assassins-creed-black-flag-resynced")
+                                
+        card = page.locator('.card__section')
+
+        earn_text = card.get_by_text("Earn 17.5 points on this").inner_text()
+        expect (card.get_by_text("Earn 17.5 points on this")).to_be_visible()
+        print(f"'{earn_text}' is visible")
+
+        expect (card.get_by_role('button', name="Learn more")).to_be_visible()
+
+        card.get_by_role('button', name="Learn more").click()
+        expect (page.locator('.gw-rd-popup-widget-container')).to_be_visible()
+        page.wait_for_timeout(500)
+        print(f"An expected widget is visible")
