@@ -111,3 +111,16 @@ class TestDatablitzPS5Product:
         short_descript.get_by_role('link', name="See full description").click()
         page.wait_for_timeout(500)
         print(f"Full description expected")
+
+    def test_product_price(self, page: Page):
+        page.goto("https://ecommerce.datablitz.com.ph/products/ps5-assassins-creed-black-flag-resynced")
+                        
+        card = page.locator('.card__section')
+
+        expect (card.get_by_text("Price:", exact=True)).to_be_visible()
+        print(f"Price text is visible")
+
+        price = card.locator('.price')
+
+        text = (price).inner_text()
+        print(f"Expected price: {text}")
