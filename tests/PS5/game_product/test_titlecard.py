@@ -147,3 +147,27 @@ class TestDatablitzPS5Product:
         in_stock_text = (in_stock).inner_text()
         expect (in_stock).to_be_visible()
         print(f"Stock: {in_stock_text}")
+
+    def test_product_quantity(self, page: Page):
+        page.goto("https://ecommerce.datablitz.com.ph/products/ps5-assassins-creed-black-flag-resynced")
+                                        
+        card = page.locator('.card__section')
+
+        expect (card.get_by_text('Quantity:')).to_be_visible()
+
+        expect (card.locator('.product-form__quantity')).to_be_visible()
+        print(f"Quantity tool is visible")
+
+        options = card.locator('.product-form__quantity option').count()
+        assert options > 0, "No option values"
+        print(f"Option values found: {options}")
+
+        for i in range(options):
+            option = card.locator('.product-form__quantity option').nth(i)
+            option_value = option.get_attribute('value')
+            option_text = option.inner_text()
+
+            card.locator('.product-form__quantity').select_option(option_value)
+            print(f"Quantity: {option_text}")
+
+        print(f"All option values are tested")
