@@ -171,3 +171,8 @@ class TestDatablitzPS5Product:
             print(f"Quantity: {option_text}")
 
         print(f"All option values are tested")
+
+        add_to_cart = card.locator('button[type="submit"]')
+        expect (add_to_cart).to_be_visible()
+        expect (add_to_cart).to_be_enabled()
+        print(f"Add to card button is working")
