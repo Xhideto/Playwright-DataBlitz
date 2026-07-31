@@ -33,3 +33,13 @@ class TestDatablitzPS5Product:
 
         expect (price).to_be_visible()
         print(f"Total price expected: {price_text}")
+
+    def test_product_addon_addtocart_button(self, page: Page):
+        page.goto("https://ecommerce.datablitz.com.ph/products/ps5-assassins-creed-black-flag-resynced")
+        
+        frequently_bought = page.locator('.cbb-frequently-bought-container')
+
+        add_to_cart = frequently_bought.locator('.cbb-frequently-bought-add-button')
+        expect (add_to_cart).to_be_visible()
+        expect (add_to_cart).to_be_enabled()
+        print(f"Add to card button is working")
