@@ -64,3 +64,26 @@ class TestDatablitzPS5Product:
             page.wait_for_timeout(300)
             assert checkbox.is_checked(), "Checkbox didn't check"
         print(f"All of the checkboxes work")
+
+    def test_product_addon_links(self, page: Page):
+        page.goto("https://ecommerce.datablitz.com.ph/products/ps5-assassins-creed-black-flag-resynced")
+                        
+        frequently_bought = page.locator('.cbb-frequently-bought-container')
+
+        collectors_ed = frequently_bought.get_by_role('link', name="PS5 Assassins Creed Black Flag Resynced Collectors Edition (Asian)", exact=True)
+        collectors_text = collectors_ed.inner_text()
+        expect (collectors_ed).to_be_visible()
+        collectors_ed.click()
+        page.wait_for_timeout(500)
+        expect (page).to_have_url(re.compile(r"/products/"))
+        page.go_back()
+        print(f"{collectors_text} link works")
+
+        pre_ord = frequently_bought.get_by_role('link', name="PS5 The Blood of Dawnwalker Day 1 Edition Pre-Order Downpayment", exact=True)
+        pre_ord_text = pre_ord.inner_text()
+        expect (pre_ord).to_be_visible()
+        pre_ord.click()
+        page.wait_for_timeout(500)
+        expect (page).to_have_url(re.compile(r"/products/"))
+        page.go_back()
+        print(f"{pre_ord_text} link works")
